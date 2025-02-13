@@ -34,7 +34,6 @@ jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decoded)=>{
 }
 
 
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ygrer.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const client = new MongoClient(uri, {
   serverApi: {
