@@ -53,7 +53,30 @@ async function run() {
     const lostAndFoundCollection = database.collection("lostItems");
     const recoveredItemsCollection = database.collection("recoveredItems");
 
-   
+    app.post("/jwt", (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+
+        })
+        .send({ success: true });
+    });
+    app.post('/logout', (req, res) => {
+      res
+        .clearCookie('token', {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        })
+        .status(200)
+        .send({ success: true, message: "Logged out successfully" });
+    });
     
 
     
