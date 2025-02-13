@@ -196,19 +196,7 @@ async function run() {
       res.send({ success: true });
     });
 
-    app.get("/recovered-items", verifyToken, async (req, res) => {
-      try {
-        const { email } = req.query;
-        if (req.user.email !== email) {
-          return res.status(403).send({ message: "Forbidden access" });
-        }
-        const result = await recoveredItemsCollection.find({ recoveredByEmail: email }).toArray();
-        res.send(result);
-      } catch (error) {
-        console.error("Error fetching recovered items:", error);
-        res.status(500).send({ message: "An error occurred while fetching recovered items." });
-      }
-    });
+    
     
       }
    
